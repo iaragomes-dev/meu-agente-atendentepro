@@ -1,0 +1,28 @@
+name: "Feedback Agent"
+protocol_prefix: "SAC"
+ticket_types:
+  - name: "duvida"
+    label: "Dúvida"
+    default_priority: "normal"
+  - name: "reclamacao"
+    label: "Reclamação"
+    default_priority: "alta"
+  - name: "sugestao"
+    label: "Sugestão"
+    default_priority: "baixa"
+
+email:
+  enabled: true
+  brand_color: "#660099"
+  brand_name: "Minha Empresa"
+  sla_message: "Retornaremos em até 24h úteis."
+
+priorities:
+  - name: "baixa"
+    sla_hours: 72
+  - name: "normal"
+    sla_hours: 24
+  - name: "alta"
+    sla_hours: 8
+  - name: "urgente"
+    sla_hours: 2

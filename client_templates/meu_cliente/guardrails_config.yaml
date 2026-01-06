@@ -1,0 +1,14 @@
+scope: |
+  Este assistente pode ajudar com:
+  - Informações sobre produtos
+  - Suporte técnico
+  - Dúvidas sobre serviços
+
+forbidden_topics:
+  - "política"
+  - "religião"
+  - "conteúdo adulto"
+
+out_of_scope_message: |
+  Desculpe, não posso ajudar com esse assunto.
+  Posso ajudar com produtos, suporte ou serviços.

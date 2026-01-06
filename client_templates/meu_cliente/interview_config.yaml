@@ -1,0 +1,13 @@
+agent_name: "Interview Agent"
+interview_questions: |
+  Para cada tópico, faça as seguintes perguntas:
+  
+  ## Vendas
+  1. Qual produto você tem interesse?
+  2. Qual quantidade desejada?
+  3. Qual seu email para contato?
+  
+  ## Suporte
+  1. Descreva o problema
+  2. Quando começou?
+  3. Já tentou alguma solução?

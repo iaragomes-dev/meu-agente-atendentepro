@@ -1,0 +1,31 @@
+name: "Escalation Agent"
+triggers:
+  explicit_request:
+    - "quero falar com um humano"
+    - "atendente humano"
+    - "falar com uma pessoa"
+  frustration:
+    - "você não está me ajudando"
+    - "isso não resolve"
+    
+channels:
+  phone:
+    enabled: true
+    number: "0800-123-4567"
+    hours: "Seg-Sex 8h-18h"
+  email:
+    enabled: true
+    address: "atendimento@empresa.com"
+    sla: "Resposta em até 24h"
+  whatsapp:
+    enabled: true
+    number: "(11) 99999-9999"
+
+business_hours:
+  start: 8
+  end: 18
+  days: [monday, tuesday, wednesday, thursday, friday]
+
+messages:
+  greeting: "Entendo que você precisa de um atendimento especializado."
+  out_of_hours: "Nosso atendimento funciona de Seg-Sex, 8h-18h."
