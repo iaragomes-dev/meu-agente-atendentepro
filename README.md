@@ -1,8 +1,8 @@
-# 🤖 Projeto AtendentePro - Arquitetura Multi-Agentes (v0.5.0)
+# 🤖 Projeto AtendentePro - Arquitetura Multi-Agentes (v0.5.3)
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/iaragomes-dev/meu-agente-atendentepro)
 
 Este projeto implementa a arquitetura de atendimento inteligente baseada na biblioteca **AtendentePro**.
-
-O foco desta implementação é demonstrar o **Roteamento Semântico** e a orquestração entre agentes especializados.
 
 ## 🏗️ Arquitetura Implementada
 
