@@ -10,13 +10,11 @@ ticket_types:
   - name: "sugestao"
     label: "Sugestão"
     default_priority: "baixa"
-
 email:
   enabled: true
   brand_color: "#660099"
   brand_name: "Minha Empresa"
   sla_message: "Retornaremos em até 24h úteis."
-
 priorities:
   - name: "baixa"
     sla_hours: 72

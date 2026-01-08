@@ -1,0 +1,13 @@
+[2026-01-08 19:15:19] SISTEMA: --- Nova Sessão Iniciada ---
+[2026-01-08 19:15:36] USUÁRIO: ola
+[2026-01-08 19:15:39] ROBÔ: Olá! Como posso ajudar você hoje? 😊
+[2026-01-08 19:15:57] USUÁRIO: quero falar com um humano
+[2026-01-08 19:15:59] ROBÔ: Claro! Você pode entrar em contato com um de nossos atendentes pelos seguintes canais: 
+
+📞 0800-123-4567  
+📧 atendimento@empresa.com  
+💬 (11) 99999-9999  
+
+Eles estarão prontos para ajudar você. 
+[2026-01-08 19:16:17] SISTEMA: --- Sessão Encerrada ---
+

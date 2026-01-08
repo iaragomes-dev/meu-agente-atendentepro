@@ -1,20 +1,23 @@
 import asyncio
 import os
-from pathlib import Path
+import datetime # <--- Novidade: Para saber a hora da mensagem
 from dotenv import load_dotenv
-
-# Importamos a biblioteca padrão da OpenAI (que sabemos que você tem)
 from openai import AsyncAzureOpenAI
-# Importamos a sua configuração de agentes
-from atendentepro import create_standard_network
 
-# Carrega senhas
 load_dotenv()
 
-async def main():
-    print("☁️  Iniciando Sistema (Modo Direto Azure)...")
+# Função simples para gravar no arquivo (O "MonkAI" caseiro)
+def salvar_log(quem, mensagem):
+    agora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    linha = f"[{agora}] {quem}: {mensagem}\n"
+    
+    # Abre o arquivo 'historico_conversas.txt' e adiciona a linha no final
+    with open("historico_conversas.txt", "a", encoding="utf-8") as f:
+        f.write(linha)
 
-    # 1. Configurar a Conexão com a Microsoft
+async def main():
+    print("☁️  Iniciando AtendentePro (Com Registro de Logs)...")
+
     try:
         client_azure = AsyncAzureOpenAI(
             api_key=os.getenv("AZURE_OPENAI_API_KEY"),
@@ -26,59 +29,51 @@ async def main():
         print(f"❌ Erro de Configuração: {e}")
         return
 
-    # 2. Carregar o Cérebro do Agente (Suas regras YAML)
-    print("🧠 Carregando regras de negócio...")
-    network = create_standard_network(
-        templates_root=Path("./client_templates"),
-        client="meu_cliente"
-    )
-    
-    # Pegamos o Agente de Triagem (o recepcionista)
-    agente = network.triage
-    
-    # Extraímos as instruções dele (O Prompt do Sistema)
-    # Se for uma função, executamos. Se for texto, usamos direto.
-    instrucoes_sistema = agente.instructions
-    if callable(instrucoes_sistema):
-        instrucoes_sistema = instrucoes_sistema({}) # Executa para pegar o texto
+    # O SUPER PROMPT (Mantivemos igual)
+    super_prompt = """
+    VOCÊ É O ASSISTENTE VIRTUAL DA "MINHA EMPRESA".
+    DIRETRIZES:
+    1. TOM DE VOZ: Profissional, empático, use emojis moderadamente (👋, ✅).
+    2. SE PEDIR HUMANO: Passe IMEDIATAMENTE: 
+       📞 0800-123-4567 | 📧 atendimento@empresa.com | 💬 (11) 99999-9999
+    3. SE FOR RECLAMAÇÃO: Acolha, pergunte detalhes e confirme o registro.
+    """
 
-    print(f"✅ Conectado na Azure! (Deploy: {deploy_name})")
-    print(f"🤖 Agente Ativo: {agente.name}")
+    print(f"✅ Conectado! Logs sendo salvos em 'historico_conversas.txt'")
     print("💬 Digite 'sair' para encerrar.\n")
+    
+    salvar_log("SISTEMA", "--- Nova Sessão Iniciada ---")
 
-    # 3. Histórico da Conversa
-    # Começamos ensinando o robô quem ele é (System Message)
-    messages = [
-        {"role": "system", "content": instrucoes_sistema}
-    ]
+    messages = [{"role": "system", "content": super_prompt}]
 
-    # 4. Loop de Conversa
     while True:
         user_input = input("👤 Você: ")
         if user_input.lower() in ["sair", "exit"]:
+            salvar_log("SISTEMA", "--- Sessão Encerrada ---\n")
             break
             
-        # Adiciona sua fala ao histórico
+        # 1. Salva o que você falou
+        salvar_log("USUÁRIO", user_input)
         messages.append({"role": "user", "content": user_input})
 
         try:
-            # Envia para a Azure processar
             response = await client_azure.chat.completions.create(
                 model=deploy_name,
                 messages=messages,
                 temperature=0.7
             )
-            
-            # Pega a resposta do robô
             bot_reply = response.choices[0].message.content
+            
             print(f"🤖 Bot: {bot_reply}\n")
             
-            # Guarda a resposta no histórico para ele lembrar do contexto
+            # 2. Salva o que o Robô falou
+            salvar_log("ROBÔ", bot_reply)
+            
             messages.append({"role": "assistant", "content": bot_reply})
 
         except Exception as e:
-            print(f"❌ Erro na Azure: {e}")
-            print("Dica: Verifique se o 'AZURE_DEPLOYMENT_NAME' no .env está igualzinho ao site da Azure.")
+            print(f"❌ Erro: {e}")
+            salvar_log("ERRO", str(e))
 
 if __name__ == "__main__":
     asyncio.run(main())

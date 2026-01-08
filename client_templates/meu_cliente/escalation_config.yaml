@@ -7,7 +7,7 @@ triggers:
   frustration:
     - "você não está me ajudando"
     - "isso não resolve"
-    
+    - "quero falar com gente de verdade"
 channels:
   phone:
     enabled: true
@@ -20,12 +20,10 @@ channels:
   whatsapp:
     enabled: true
     number: "(11) 99999-9999"
-
 business_hours:
   start: 8
   end: 18
   days: [monday, tuesday, wednesday, thursday, friday]
-
 messages:
   greeting: "Entendo que você precisa de um atendimento especializado."
   out_of_hours: "Nosso atendimento funciona de Seg-Sex, 8h-18h."
